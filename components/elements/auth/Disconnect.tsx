@@ -5,14 +5,14 @@ export default function Disconnect() {
   if (!isConnected) return null
   return (
     <div>
-      <div className="flex items-center gap-2 text-sm">
+      <button
+        className="connect__button"
+        onClick={() => logout()}>
+        disconnect
+      </button>
+            <div className="flex justify-end gap-2 text-sm">
       {ensName}
       </div>
-      <button
-        className=" hover:font-bold"
-        onClick={() => logout()}>
-        Disconnect
-      </button>
     </div>
   )
 }
