@@ -7,6 +7,8 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { SWRConfig } from 'swr'
 import '@rainbow-me/rainbowkit/styles.css';
+import {createClient as urqlCreateClient} from 'urql';
+import {Provider as UrqlProvider} from 'urql';
 
 const { chains, provider } = configureChains(
   [mainnet],
@@ -37,33 +39,39 @@ const wagmiClient = createClient({
   provider,
 })
 
+const urqlClient = urqlCreateClient({
+  url: "https://api.zora.co/graphql"
+})    
+
 export function AppWrapper({ children }: { children: JSX.Element | JSX.Element[] }) {
   return (
     <div>
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider
-        chains={chains}
-        coolMode
-        theme={lightTheme({
-          accentColor: 'black',
-          borderRadius: 'large',
-        })}>
-        <SWRConfig
-          value={{
-            fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
-          }}>
-          <NextNProgress
-            color="rgba(0,0,0,.5)"
-            startPosition={0.125}
-            stopDelayMs={200}
-            height={2}
-            showOnShallow={true}
-            options={{ showSpinner: false }}
-          />
-          {children}
-        </SWRConfig>
-      </RainbowKitProvider>
-    </WagmiConfig>
+      <UrqlProvider value={urqlClient}>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            chains={chains}
+            coolMode
+            theme={lightTheme({
+              accentColor: 'black',
+              borderRadius: 'large',
+            })}>
+            <SWRConfig
+              value={{
+                fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
+              }}>
+              <NextNProgress
+                color="rgba(0,0,0,.5)"
+                startPosition={0.125}
+                stopDelayMs={200}
+                height={2}
+                showOnShallow={true}
+                options={{ showSpinner: false }}
+              />
+              {children}
+            </SWRConfig>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </UrqlProvider>
     </div>
   )
 }
