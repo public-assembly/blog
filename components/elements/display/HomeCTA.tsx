@@ -14,7 +14,7 @@ export default function HomeCTA({callback}) {
     function ButtonContainer() {
         return (
             <div className="cols-start-1 cols-end-2 row-start-0 row-end-1 w-full">
-                <button onClick={()=>callback()} className="bg-black text-white w-full h-full">
+                <button onClick={()=>callback()} className="bg-black hover:bg-gray-900 text-white w-full h-full">
                     read
                 </button>
             </div>
