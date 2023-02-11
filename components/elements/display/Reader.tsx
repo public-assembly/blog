@@ -20,7 +20,9 @@ export default function Reader({callback}) {
                 {"< back"}
             </button>
             <div className="flex flex-row flex-wrap justify-self-center h-full">
-                <ReactMarkdown children={content} />
+                <ReactMarkdown>
+                    {content}
+                </ReactMarkdown>
             </div>
         </div>
     )
