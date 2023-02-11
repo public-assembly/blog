@@ -6,7 +6,7 @@ import zorbDevil from "../public/assets/ZorbDevil.png"
 const pages = [
   {
     slug: '/',
-    title: 'blog',
+    title: 'Reader',
   },  
 ]
 
@@ -14,7 +14,7 @@ export function Navigation() {
   const router = useRouter()
 
   return (
-    <nav className="text-[35px] flex flex-row items-center gap-8">
+    <nav className="text-[35px] flex flex-row items-center gap-8 ">
       {pages.map((page) => (
         <Link passHref href={page.slug} key={page.slug}>
           {/* <a
@@ -27,7 +27,7 @@ export function Navigation() {
           <div
             className=""
             style={{
-              fontWeight: router.asPath === page.slug ? 'bold' : 'normal',
+              fontWeight: router.asPath === page.slug ? 'normal' : 'normal',
             }}>
             {page.title}
           </div>            
