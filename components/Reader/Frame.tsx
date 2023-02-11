@@ -31,7 +31,8 @@ export default function Frame() {
     })    
 
     const markdownConverter = async (cid: string) => {
-        const fetchResult = await fetch(`https://ipfs.io/ipfs/${cid}`)
+        // ipfs.nftstorage.link
+        const fetchResult = await fetch(`https://${cid}.ipfs.nftstorage.link`)
         return fetchResult.text();
     }
 
