@@ -1,6 +1,6 @@
 // @ts-ignore
 
-export default function HomeCTA({callback}) {
+export default function HomeCTA({pageStatus, collectionCallback, collectionState}) {
 
     function InputContainer() {
         return (
@@ -14,13 +14,35 @@ export default function HomeCTA({callback}) {
     function ButtonContainer() {
         return (
             <div className="cols-start-1 cols-end-2 row-start-0 row-end-1 w-full">
-                <button onClick={()=>callback()} className="bg-black hover:bg-gray-900 text-white w-full h-full">
+                <button onClick={()=>pageStatus()} className="bg-black hover:bg-gray-900 text-white w-full h-full">
                     read
                 </button>
             </div>
         )
     }
 
+//     <input
+//     className="text-black text-center bg-slate-200"
+//     placeholder="Input NFT Address"
+//     name="inputContract"
+//     type="text"
+//     value={dropInputs.salesConfig.presaleMerkleRoot}
+//     onChange={(e) => {
+//         e.preventDefault();
+//         setDropInputs(current => {
+//           return {
+//             ...current,
+//             salesConfig: {
+//               ...current.salesConfig,
+//               presaleMerkleRoot: e.target.value
+//             }                        
+//           }
+//         })
+//     }}
+//     required                    
+//   >
+//   </input>
+//   <button>
 
     function ContractAddressInput() {
         return (
@@ -29,7 +51,18 @@ export default function HomeCTA({callback}) {
                     contract address:
                 </div>
                 <input
-                    className=" border-[1px] border-black w-full flex flex-row items-center"
+                    type="text"
+                    value={collectionState.collectionAddress}
+                    onChange={(e) => {
+                        e.preventDefault();
+                        collectionCallback((current: object) => {
+                            return {
+                                ...current,
+                                collectionAddress: e.target.value                                             
+                            }
+                        })
+                    }}                
+                    className=" border-[1px] border-black w-full flex flex-row items-center text-sm"
                 >
                 </input>
             </div>
@@ -52,13 +85,13 @@ export default function HomeCTA({callback}) {
 
     return (
         <div
-            className="grid grid-cols-1 grid-rows-2 border-black text-[14px] w-[468px] h-fit"
+            className="grid grid-cols-1 grid-rows-2 text-[14px] w-[469px] h-fit"
         >
             <div className="text-center py-4  h-fit ">
                 welcome to <i>reader</i> ! enter the contract address and the tokenid to render a markdown nft. note: if the nft is not a markdown file, reader will not render.
             </div>
 
-            <div className=" text-center grid grid-cols-[2fr_1fr] grid-rows-1 h-fit space-x-2 w-full ">
+            <div className="grid grid-cols-[2fr_1fr] grid-rows-1 space-x-1 h-fit  w-full ">
                 <InputContainer />
                 <ButtonContainer />
             </div>
