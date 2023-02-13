@@ -37,7 +37,8 @@ export default function Frame() {
     }
 
     const fetcher = async (collection: string, tokenId: string) => {
-        // 0xc1e87f349c0673de48f6292e594c62b35bc270a7
+        // 0xc1e87f349c0673de48f6292e594c62b35bc270a7 - 100 days of code
+        // 0x9Ccb1eE41874b0346F9942cA7fa128Be12856BC2 - hyperstructures
         const aQuery = ` 
             query ListCollections {
                 token(
