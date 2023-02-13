@@ -28,7 +28,7 @@ export default function Reader({callback, contentInput}) {
                 </div>
             ):(
                 <div className="flex flex-row flex-wrap justify-self-center h-full">
-                    {"No Valid Data Here. Go back and search again"}
+                    {"Invalid data. Go back and search again"}
                 </div>
             )}
         </div>
