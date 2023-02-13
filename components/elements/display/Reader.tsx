@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import Editor from 'rich-markdown-editor';
 // @ts-ignore
 
 export default function Reader({callback, contentInput}) {
@@ -16,9 +17,14 @@ export default function Reader({callback, contentInput}) {
             </button>
             {contentInput? (
                 <div className="flex flex-row flex-wrap justify-self-center h-full">
-                    <ReactMarkdown>
+                    {/* <ReactMarkdown>
                         {contentInput}
-                    </ReactMarkdown>
+                    </ReactMarkdown> */}
+                    <Editor
+                        disableExtensions={['container_notice']}
+                        defaultValue={contentInput}
+                        readOnly
+                    />                    
                 </div>
             ):(
                 <div className="flex flex-row flex-wrap justify-self-center h-full">
