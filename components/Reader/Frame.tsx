@@ -68,8 +68,8 @@ export default function Frame() {
         }
     }
 
-    const pageStatusAndFetch = () => {
-        fetcher(collection.collectionAddress, collection.tokenId)
+    const pageStatusAndFetch = async () => {
+        await fetcher(collection.collectionAddress, collection.tokenId);
         changeState();
     }    
 
