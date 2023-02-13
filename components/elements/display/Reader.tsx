@@ -10,13 +10,13 @@ export default function Reader({callback, contentInput}) {
 
     return (
         <div
-            className="font-times relative top-[10%] grid grid-cols-[1fr_4fr_1fr] h-screen w-full"
+            className="font-times relative top-[10%] grid md:grid-cols-[1fr_4fr_1fr] h-screen w-full"
         >
-            <button onClick={()=>callback()} className="flex flex-row justify-self-start text-gray-400 hover:text-gray-700 h-fit w-full">
+            <button onClick={()=>callback()} className="hidden md:flex md:flex-row md:justify-self-start text-gray-400 hover:text-gray-700 h-fit w-full">
                 {"< back"}
             </button>
             {contentInput? (
-                <div className="flex flex-row flex-wrap justify-self-center h-full">
+                <div className="px-2 md:flex md:flex-row md:flex-wrap md:justify-self-center h-full">
                     {/* <ReactMarkdown>
                         {contentInput}
                     </ReactMarkdown> */}
@@ -28,7 +28,7 @@ export default function Reader({callback, contentInput}) {
                 </div>
             ):(
                 <div className="flex flex-row flex-wrap justify-self-center h-full">
-                    {"Invalid data. Go back and search again"}
+                    {"Invalid Data. Go back and search again"}
                 </div>
             )}
         </div>

@@ -81,14 +81,13 @@ export default function Frame() {
     // )
 
     return (
-        <section id="main-feed" className='text-[18px] grid grid-cols-1 h-screen w-[75%]  gap-4 justify-center'>
+        <section id="main-feed" className='text-[18px] grid grid-cols-1 h-screen w-full md:w-[75%] gap-4 justify-center'>
             {siteStatus == 0 ? (
-                <div className="flex flex-row items-center justify-center ">
+                <div className=" flex flex-row items-center justify-center ">
                     <HomeCTA readCallback={pageStatusAndFetch} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} tokenIdOnChange={setCollection} tokenIdName={"tokenId"} tokenIdValue={collection.tokenId} />
-                    {/* <input value={collection.collectionAddress} onChange={(e) => {e.preventDefault(); setCollection(e.target.value)}} className="border-2"></input> */}
                 </div>
             ) : (
-                <div className="flex flex-row items-center justify-center ">
+                <div className=" flex flex-row items-center justify-center ">
                     <Reader contentInput={content} callback={changeState} />
                 </div>
             )}
