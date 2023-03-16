@@ -6,7 +6,7 @@ import zorbDevil from "../public/assets/ZorbDevil.png"
 const pages = [
   {
     slug: '/',
-    title: 'Reader',
+    title: 'Index',
   },  
 ]
 
