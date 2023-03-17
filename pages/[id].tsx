@@ -33,6 +33,10 @@ const CurationPage: NextPage = () => {
     const alchemyGoerli = new Alchemy(alchemy_setting_goerli);
     const alchemyMainnet = new Alchemy(alchemy_settings_mainnet);
 
+    //  Return token 1 metadata from the contracts stored in listing receipts
+    //      currently this works because we are only indexing zora erc721 editions
+    //      tokenId will need to be dynamic and grabbed from the curation receipt as well AND
+    //      we should be able to treat erc721s + erc1155s differently (erc721s will have hasTokenId = false)     
     const parseMetadata = async (metadata: any) => {
         let parsedNFTs = []
         for (let i = 0; i < metadata.nfts.length; i++) {
@@ -42,12 +46,17 @@ const CurationPage: NextPage = () => {
         setParsedMetadata(parsedNFTs)
     }
 
+    //  Get metadata fetches all of the curation receipt nfts for a given contract
+    //      sets that to state, and then runs the parseMetadata function with the same return
+    //      this is run on page load once the route changes post search query via useEffect
     const getMetadata = async () => {
         const curationInfo: any = await alchemyGoerli.nft.getNftsForContract(contract)
         setCurationMetadata(curationInfo);
         await parseMetadata(curationInfo) 
     }    
 
+    // run if contract isnt null, if not dont do anythiing
+    // trigger dependency == router to prevent this firing before contract value has arrived
     useEffect(() => {
         if(!!contract) {
             getMetadata();
