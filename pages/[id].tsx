@@ -19,10 +19,7 @@ const CurationPage: NextPage = () => {
     const listed = curationMetadata ? curationMetadata.nfts : []
     const parsed = parsedMetadata ? parsedMetadata : []
 
-    console.log("curaitonMetadata: ", listed)
-    console.log("parsed: ", parsed)
-
-    // Alchemy Configs
+    // Initializing Alchemy indexer configs
     const alchemy_setting_goerli = {
         apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY_GOERLI,
         network: Network.ETH_GOERLI, // Replace with your network.
@@ -32,6 +29,7 @@ const CurationPage: NextPage = () => {
         network: Network.ETH_MAINNET, 
     };    
 
+    // Initializing Alchemy indexer instances
     const alchemyGoerli = new Alchemy(alchemy_setting_goerli);
     const alchemyMainnet = new Alchemy(alchemy_settings_mainnet);
 

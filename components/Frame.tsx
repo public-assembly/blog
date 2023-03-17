@@ -10,6 +10,7 @@ export default function Frame() {
         collectionAddress: "", 
     });
 
+    // change route function, passed in as callback to the search component
     const routeChange = () => {
         router.push({
             pathname: collection.collectionAddress
