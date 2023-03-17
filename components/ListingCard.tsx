@@ -15,7 +15,7 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
             <div></div>            
         ) : (
             <div className="relative flex flex-row flex-wrap w-full  text-[14px]">
-                <div  className="overflow-hidden relative w-[348px]  aspect-video mb-[14px]">
+                <div  className="overflow-hidden relative w-[348px] aspect-video mb-[14px]">
                     <Image
                         src={metadata?.media[0]?.thumbnail}
                         layout="fill"

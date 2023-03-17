@@ -81,7 +81,7 @@ const CurationPage: NextPage = () => {
                     </a>
                 </div>                
             </div>
-            <div className="grid grid-cols-4 w-full">
+            <div className="grid grid-cols-4 space-x-[23px] w-full">
                 {listed.map((collection: any, index) => (
                     <ListingCard
                         key={index}
