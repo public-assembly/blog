@@ -11,13 +11,11 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
     return (
         <>
         {!metadata || !collection ? (
+            // TODO: maybe add a loading state instead here ?
             <div></div>            
-            // <div className="flex flex-row border-2 relative w-[300px] h-[300px] justify-center items-center">
-            //     nothing
-            // </div>
         ) : (
             <div className="relative flex flex-row flex-wrap w-full  text-[14px]">
-                <div  className="overflow-hidden relative w-[300px]  aspect-video mb-[14px]">
+                <div  className="overflow-hidden relative w-[348px] aspect-video mb-[14px]">
                     <Image
                         src={metadata?.media[0]?.thumbnail}
                         layout="fill"
@@ -32,10 +30,7 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
                 </div>                                     
                 <div className="flex flex-row flex-wrap w-full">
                     curator&nbsp;<EnsResolution address={collection.rawMetadata.properties.curator}/>
-                </div>                                     
-                {/* <div className="flex flex-row flex-wrap w-full">
-                    {metadata?.description}
-                </div>           */}                                                         
+                </div>                                                                                       
             </div>
         )}
         </>

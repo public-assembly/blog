@@ -1,7 +1,4 @@
-// @ts-ignore
-
-export default function Search({routeChange, collectionOnChange, collectionValue, collectionName}) {
-
+export default function Search({routeChange, collectionOnChange, collectionValue, collectionName}: any) {
 
     return (
         <div
@@ -35,7 +32,14 @@ export default function Search({routeChange, collectionOnChange, collectionValue
             </div>
             <div className="flex flex-row justify-center text-left py-4  h-fit ">
                 welcome to&nbsp;<i>index</i> ! enter the curation contract you want to look up
-            </div>            
+            </div>    
+            <div className="flex flex-row justify-center text-left  h-fit text-[12px]">
+                <i>for testing purposes →&nbsp;
+                    <a className="hover:underline" href="https://goerli.etherscan.io/address/0xe945f1a1671d6819bedbb9178aed41b11e8b83a8">
+                        0xe945f1a1671d6819bedbb9178aed41b11e8b83a8
+                    </a>
+                </i>        
+            </div>                          
         </div>
     )
 }

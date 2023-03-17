@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { Seo } from 'components'
-import Frame from 'components/Reader/Frame';
+import Frame from 'components/Frame';
 import dynamic from 'next/dynamic';
 
 const Home: NextPage = () => {
