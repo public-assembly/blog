@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic'
 import { ConnectButton} from '@rainbow-me/rainbowkit'
 
-const DisconnectButton = dynamic(() => import('./elements/auth/Disconnect'), {
+const DisconnectButton = dynamic(() => import('./auth/Disconnect'), {
   ssr: false,
 })
 
-const Connect = dynamic(() => import('./elements/auth/Connect'), {
+const Connect = dynamic(() => import('./auth/Connect'), {
   ssr: false,
 })
 
