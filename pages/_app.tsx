@@ -4,7 +4,7 @@ import { Header } from './../components'
 import { AppWrapper } from './../components'
 import dynamic from 'next/dynamic'
 
-function NetLabel({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <AppWrapper>    
       <div>
@@ -17,4 +17,4 @@ function NetLabel({ Component, pageProps }: AppProps) {
   )
 }
 
-export default NetLabel
+export default App

@@ -107,17 +107,10 @@ export default function Frame() {
     // )
 
     return (
-        <section id="main-feed" className='text-[18px] grid grid-cols-1 h-screen w-full md:w-[90%] border-2 gap-4 justify-center'>
-            {siteStatus == 0 ? (
-                <div className=" flex flex-row items-center justify-center ">
-                    {/* <HomeCTA readCallback={pageStatusAndFetch} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} tokenIdOnChange={setCollection} tokenIdName={"tokenId"} tokenIdValue={collection.tokenId} /> */}
-                    <Search routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} />
-                </div>
-            ) : (
-                <div className=" flex flex-row items-center justify-center ">
-                    {/* <Reader contentInput={content} callback={changeState} /> */}
-                </div>
-            )}
+        <section id="main-feed" className='grid grid-cols-1 h-screen w-full  gap-4 justify-center'>
+            <div className=" flex flex-row items-center justify-center ">
+                <Search routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} />
+            </div>
         </section>
     )
 }

@@ -1,112 +1,96 @@
+// @ts-nocheck
+
 import { useRouter } from "next/router";
 import { useState, useEffect } from 'react';
 import { Network, Alchemy } from 'alchemy-sdk';
 import { NextPage } from 'next'
+import { ListingCard } from "../components/ListingCard.tsx"
+import { EnsResolution } from '../utils/EnsResolution';
 
 const CurationPage: NextPage = () => {
+
     const router = useRouter(); 
-    console.log("router:", router.query)    
     const { id } = router.query;
-    console.log("id:", id)    
-
-    console.log("what is curaitn contracT: ", id)
-
-    const contract: any = id ? id : "hehe"
+    const contract: any = id ? id : ""
     
     const [curationMetadata, setCurationMetadata] = useState();
+    const [parsedMetadata, setParsedMetadata] = useState();
     
     const listed = curationMetadata ? curationMetadata.nfts : []
+    const parsed = parsedMetadata ? parsedMetadata : []
 
     console.log("curaitonMetadata: ", listed)
+    console.log("parsed: ", parsed)
 
-
-    // Optional Config object, but defaults to demo api-key and eth-mainnet.
-    const settings = {
-        apiKey: '1kuwrlN630lT2G_BsfpYMW0AcrNOCTMg', // Replace with your Alchemy API Key.
+    // Alchemy Configs
+    const alchemy_setting_goerli = {
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY_GOERLI,
         network: Network.ETH_GOERLI, // Replace with your network.
     };
+    const alchemy_settings_mainnet = {
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY,
+        network: Network.ETH_MAINNET, 
+    };    
 
-    const alchemy = new Alchemy(settings);
+    const alchemyGoerli = new Alchemy(alchemy_setting_goerli);
+    const alchemyMainnet = new Alchemy(alchemy_settings_mainnet);
 
-    const cleanMetadata = (metadata: any) => {
-        for (let i = 0; i < metadata.length; i++) {
-            
+    const parseMetadata = async (metadata: any) => {
+        let parsedNFTs = []
+        for (let i = 0; i < metadata.nfts.length; i++) {
+            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, "1")
+            parsedNFTs.push(nftData)
         }
+        setParsedMetadata(parsedNFTs)
     }
 
     const getMetadata = async () => {
-        console.log("contract.id:", contract)
-        const ok: any = await alchemy.nft.getNftsForContract(contract)
-        console.log("ok: ", ok)
-        setCurationMetadata(ok);
-        // const curationFetch: any = alchemy.nft.getNftsForContract(contract)
-        //     .then(console.log)
-        //     .then((data) => setCurationMetadata(data))    
+        const curationInfo: any = await alchemyGoerli.nft.getNftsForContract(contract)
+        setCurationMetadata(curationInfo);
+        await parseMetadata(curationInfo) 
     }    
 
     useEffect(() => {
-            if(!!contract) {
-                getMetadata();
-            }    
-        
+        if(!!contract) {
+            getMetadata();
+        }    
         },
         [router]
     )    
 
-  // Access the Alchemy NFT API
-  // alchemy.nft.getNftsForOwner('0x806164c929Ad3A6f4bd70c2370b3Ef36c64dEaa8').then(console.log);
-//   const getMetadata = () => {
-
-//     const metadata: any = alchemy.nft.getNftMetadataBatch(
-//       [
-//         {
-//           contractAddress: "0xBE9D377CA770F8350E531Fa8633E9E880b94BD6C",
-//           tokenId: "1"
-//         }
-//       ]
-//     ).then(console.log);
-
-//   "getMetadata was run"
-
-// getMetadata();    
-
     return (
-        <div className="flex flex-row flex-wrap  h-screen w-full md:w-[90%] border-2 gap-4 justify-center items-center ">
-            {/* <div>
-                {"curation contract name: " + listed[0].contract.name}
-            </div> */}
-            {listed.map((collection: any) => (
-                <div className="flex flex-row flex-wrap w-full">
-                    <div className="font-bold flex flex-row flex-wrap w-full">
-                        {"Curation Receipt # " + collection.tokenId}
-                    </div>                    
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Curation Target Type: " + collection.rawMetadata.properties.curationTargetType}
-                    </div>                                        
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Curator: " + collection.rawMetadata.properties.curator}
-                    </div>                                        
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Chain Id " + collection.rawMetadata.properties.chainId}
-                    </div>                                        
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Curated Address: " + collection.rawMetadata.properties.contract}
-                    </div>                                        
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Sort Order: " + collection.rawMetadata.properties.sortOrder}
-                    </div>          
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"Has token Id: " + collection.rawMetadata.hasTokenId}
-                    </div>    
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"type: " + collection.rawMetadata.properties.type}
-                    </div>    
-                    <div className="flex flex-row flex-wrap w-full">
-                        {"selected tokenId: " + collection.rawMetadata.properties.selectedTokenId}
-                    </div>                                                                                                                                                               
-
+        <div className="pt-[40px] pl-[36px] flex flex-row flex-wrap h-screen w-full justify-center items-start ">
+            <div className="pt-[120px] flex flex-row flex-wrap justify-start w-full">
+                <div className="flex flex-row w-full  items-end space-x-2">
+                    <div className="text-[32px] flex flex-row p-0 m-0 justify-start h-fit" >
+                        <a 
+                        className="hover:underline hover:decoration-2"
+                        href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.address}`}
+                        >
+                        {listed[0]?.contract?.name}
+                        </a>
+                    </div>
                 </div>
-            ))}
+
+                <div className="text-[23px] text-gray-400 flex flex-row flex-wrap justify-start w-full" >
+                    <a 
+                    className="hover:underline hover:decoration-2"
+                    href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.contractDeployer}`}
+                    >
+                        <EnsResolution address={listed[0]?.contract?.contractDeployer} />
+                    </a>
+                </div>                
+            </div>
+            <div className="grid grid-cols-4 w-full">
+                {listed.map((collection: any, index) => (
+                    <ListingCard
+                        key={index}
+                        index={index}
+                        metadata={parsed[index]}
+                        collection={collection}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

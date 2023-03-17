@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 const Home: NextPage = () => {
   return (
     <>
-      <section id="home-page" className=" flex flex-row justify-center h-screen">
+      <section id="home-page" className=" flex flex-row justify-center  h-screen">
         <Frame />
       </section>
       {/* <Seo/> */}
