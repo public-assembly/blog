@@ -5,10 +5,39 @@ import { useState, useEffect } from 'react';
 import { Network, Alchemy } from 'alchemy-sdk';
 import { NextPage } from 'next'
 import { ListingCard } from "../components/ListingCard.tsx"
+import { Manager } from "../components/Manager.tsx"
 import { EnsResolution } from '../utils/EnsResolution';
+import { useAuth } from "hooks/useAuth";
 
 const CurationPage: NextPage = () => {
 
+    // const killMyself = () => {
+    //     const etherActorURL = "https://goerli.ether.actor/0xe945f1a1671d6819bedbb9178aed41b11e8b83a8/getLogic"
+    //     fetch(etherActorURL)
+    //         .then(result => result.json())
+    //         .then(output => {
+    //             console.log("output", output)
+    //         }).catch(err => console.error(err))
+    // }
+
+
+    // killMyself()
+
+//   const getNFTABI = () => {
+//     const etherActorURL = `https://ether.actor/0x8d04a8c79ceb0889bdd12acdf3fa9d207ed3ff63/tokenURI/23`
+//     console.log("url: ", etherActorURL)
+//     fetch(etherActorURL)
+//         .then((result) => result.json())
+//     //   .then(result => result.json())
+//     //   .then((output) => {
+//     //     console.log("Output: ", output.abi);
+//     //   }).catch(err => console.error(err));
+//   }
+
+
+
+    const { address } = useAuth()
+    
     const router = useRouter(); 
     const { id } = router.query;
     const contract: any = id ? id : ""
@@ -87,7 +116,8 @@ const CurationPage: NextPage = () => {
                         <EnsResolution address={listed[0]?.contract?.contractDeployer} />
                     </a>
                 </div>                
-            </div>
+            </div>            
+            <Manager userAddress={address} pressAddress={listed[0]?.contract?.address}   />
             <div className="grid grid-cols-4 space-x-[23px] w-full">
                 {listed.map((collection: any, index) => (
                     <ListingCard
