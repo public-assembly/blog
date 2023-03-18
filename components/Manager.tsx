@@ -12,9 +12,13 @@ export const Manager = ({userAddress, pressAddress}: any) => {
     })
 
     /*
-
+    *
+    *
+    * *
     Figure out where to how to incorporate abi.encode for the curaiton listing stuf
-
+    * *
+    *
+    *
     */
 
     // const {
@@ -38,7 +42,7 @@ export const Manager = ({userAddress, pressAddress}: any) => {
 
     return (
         <>
-            {userMintAccess === "false" ? (            
+            {!userMintAccess || userMintAccess === "false" ? (            
                 <div>
                     NO MINT ACCESS
                 </div>            

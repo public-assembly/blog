@@ -9,12 +9,17 @@ export function useManagerAccess({userAddress, pressAddress, mintQuantity}: any)
     const pressAddressInput = pressAddress ? pressAddress : null
     const quantityInput = mintQuantity ? mintQuantity : ""
 
+    const zeroAddress: string = "0x0000000000000000000000000000000000000000"
+
     const getAccess = () => {
-        const url: string = `https://goerli.ether.actor/${pressAddressInput}/getLogic`
-        fetch(url)   
+        if (!userAddress || pressAddress === zeroAddress) {
+            setUserMintAccess(false)
+            return
+        }
+        fetch(`https://goerli.ether.actor/${pressAddressInput}/getLogic`)   
             .then(response => response.text())
             .then((data) => {
-                console.log("logic contract ", data)
+                console.log("logic contract ", data) 
                 return fetch(`https://goerli.ether.actor/${data}/canMint/${pressAddressInput}/${quantityInput}/${userAddressInput}`) 
             })
             .then(response => response.text())   
@@ -24,14 +29,12 @@ export function useManagerAccess({userAddress, pressAddress, mintQuantity}: any)
             })  
     }
 
-    // run if pressAddress isnt null, if not dont do anythiing
-    // trigger dependency == userAddress to prevent this firing before contract value has arrived
+    // run getAccess fetch on any change to pressAddressInput or userAddressInput
     useEffect(() => {
-        if(!!pressAddressInput) {
-            getAccess()
-        }},
-        [pressAddressInput, userAddressInput]
-    )        
+        getAccess()
+    },
+    [pressAddressInput, userAddressInput]
+    )   
 
     return { userMintAccess }
 }
