@@ -5,17 +5,22 @@ import { useState, useEffect } from 'react';
 import { Network, Alchemy } from 'alchemy-sdk';
 import { NextPage } from 'next'
 import { ListingCard } from "../components/ListingCard.tsx"
+import { Manager } from "../components/Manager.tsx"
 import { EnsResolution } from '../utils/EnsResolution';
+import { useAuth } from "hooks/useAuth";
 
 const CurationPage: NextPage = () => {
 
+    const { address } = useAuth()
+    
     const router = useRouter(); 
     const { id } = router.query;
-    const contract: any = id ? id : ""
+    const contract: any = id ? id : "0x0000000000000000000000000000000000000000"
     
     const [curationMetadata, setCurationMetadata] = useState();
     const [parsedMetadata, setParsedMetadata] = useState();
-    
+    const [fetching, setFetching] = useState(false)
+
     const listed = curationMetadata ? curationMetadata.nfts : []
     const parsed = parsedMetadata ? parsedMetadata : []
 
@@ -87,7 +92,10 @@ const CurationPage: NextPage = () => {
                         <EnsResolution address={listed[0]?.contract?.contractDeployer} />
                     </a>
                 </div>                
-            </div>
+            </div>            
+            <Manager userAddress={address} pressAddress={contract}   />
+            
+            {/* <Container /> */}
             <div className="grid grid-cols-4 space-x-[23px] w-full">
                 {listed.map((collection: any, index) => (
                     <ListingCard

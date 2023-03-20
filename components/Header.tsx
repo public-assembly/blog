@@ -16,9 +16,9 @@ export function Header() {
   return (
     <header className="absolute flex flex-row justify-start items-start py-4 w-full pl-[63px] gap-2">
       <Navigation />
-      {/* <div className="fixed top-4 right-4">
+      <div className="fixed top-4 right-4">
         <Connect /> 
-      </div> */}
+      </div>
     </header>
   )
 }
