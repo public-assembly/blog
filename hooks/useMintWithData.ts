@@ -1,10 +1,14 @@
 // @ts-nocheck
 
-import { erc721Press_abi } from "../abi/ERC721Press_abi";
+import { erc721Press_abi } from "../abi/erc721Press_abi";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction } from "wagmi";
 import { useState } from "react";
 
-export function useMintwithData({userMintAccess, pressAddress, mintQuantity, mintData}: any) {
+export function useMintWithData({userMintAccess, pressAddress, mintQuantity, mintData}: any) {
+
+    console.log("what is the abi:", erc721Press_abi)
+
+    console.log("usermintaccess at the top ", userMintAccess)
 
     const mintAccess = userMintAccess === "true" ? true : false
     const pressAddressInput = pressAddress ? pressAddress : ""
@@ -12,6 +16,8 @@ export function useMintwithData({userMintAccess, pressAddress, mintQuantity, min
     const dataInput = mintData ? mintData : ""
 
     // mintWithData contract call flow
+
+    console.log("prep mint access: ", mintAccess)
 
     const { config, error } = usePrepareContractWrite({
         address: pressAddressInput,
@@ -22,8 +28,11 @@ export function useMintwithData({userMintAccess, pressAddress, mintQuantity, min
             dataInput
         ],
         enabled: mintAccess,
-        overrides: {} // hardcoded as zero for no but should be dynamic based on prior read call
+        // overrides: {} // hardcoded as zero for no but should be dynamic based on prior read call
     })
+
+    console.log("prep config", config)
+    console.log("prep config error", error)
 
     const { 
         write,
@@ -33,6 +42,8 @@ export function useMintwithData({userMintAccess, pressAddress, mintQuantity, min
         isSuccess,
         status
     } = useContractWrite(config)      
+
+    console.log("data: ", data)
 
     // Wait for data from bid call
     const { data: mintWaitData, isLoading: mintWaitLoading } = useWaitForTransaction({
@@ -56,3 +67,5 @@ export function useMintwithData({userMintAccess, pressAddress, mintQuantity, min
         mintWaitLoading
     }
 }
+
+export default useMintWithData

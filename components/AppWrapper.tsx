@@ -1,7 +1,7 @@
 import NextNProgress from 'nextjs-progressbar'
 import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { createClient, configureChains, WagmiConfig } from 'wagmi'
-import { mainnet } from 'wagmi/chains';
+import { mainnet, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
@@ -11,11 +11,13 @@ import {createClient as urqlCreateClient} from 'urql';
 import {Provider as UrqlProvider} from 'urql';
 
 const { chains, provider } = configureChains(
-  [mainnet],
+  // [mainnet],
+  [goerli],
   [
     alchemyProvider({
       priority: 0,
-      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY || ""
+      // apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY || ""
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY_GOERLI || ""
     }),
     jsonRpcProvider({
       priority: 1,

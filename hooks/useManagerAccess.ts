@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export function useManagerAccess({userAddress, pressAddress, mintQuantity}: any) {
 
     const [userMintAccess, setUserMintAccess] = useState(false)
+    const [fetching, setFetching] = useState(false)
 
     const userAddressInput = userAddress ? userAddress : ""
     const pressAddressInput = pressAddress ? pressAddress : null
@@ -15,7 +16,7 @@ export function useManagerAccess({userAddress, pressAddress, mintQuantity}: any)
         if (!userAddress || pressAddress === zeroAddress) {
             setUserMintAccess(false)
             return
-        }
+        }                
         fetch(`https://goerli.ether.actor/${pressAddressInput}/getLogic`)   
             .then(response => response.text())
             .then((data) => {
@@ -26,15 +27,16 @@ export function useManagerAccess({userAddress, pressAddress, mintQuantity}: any)
             .then((data) => {
                 console.log("user mint access", data);
                 setUserMintAccess(data) 
-            })  
+            })
+            .finally(setFetching(false))            
     }
 
     // run getAccess fetch on any change to pressAddressInput or userAddressInput
     useEffect(() => {
-        getAccess()
+        getAccess()        
     },
     [pressAddressInput, userAddressInput]
     )   
 
-    return { userMintAccess }
+    return { fetching, userMintAccess }
 }
