@@ -71,10 +71,10 @@ const CurationPage: NextPage = () => {
     )    
 
     return (
-        <div className="pt-[40px] pl-[36px] flex flex-row flex-wrap h-screen w-full justify-center items-start ">
-            <div className="pt-[120px] flex flex-row flex-wrap justify-start w-full">
+        <div className="pt-[140px] pl-[36px] flex flex-col space-y-4 flex-wrap h-screen w-full ">
+            <div className="h-fit flex flex-row flex-wrap justify-start  w-full mb-[20px]">
                 <div className="flex flex-row w-full  items-end space-x-2">
-                    <div className="text-[32px] flex flex-row p-0 m-0 justify-start h-fit" >
+                    <div className="text-[35px] flex flex-row p-0 m-0 justify-start h-fit " >
                         <a 
                         className="hover:underline hover:decoration-2"
                         href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.address}`}
@@ -84,19 +84,19 @@ const CurationPage: NextPage = () => {
                     </div>
                 </div>
 
-                <div className="text-[23px] text-gray-400 flex flex-row flex-wrap justify-start w-full" >
+                <div className="text-[18px] text-gray-400 flex flex-row flex-wrap justify-start w-full" >
                     <a 
                     className="hover:underline hover:decoration-2"
                     href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.contractDeployer}`}
                     >
                         <EnsResolution address={listed[0]?.contract?.contractDeployer} />
                     </a>
-                </div>                
+                </div>                        
             </div>            
-            <Manager userAddress={address} pressAddress={contract}   />
             
+            <Manager userAddress={address} pressAddress={contract}   />
             {/* <Container /> */}
-            <div className="grid grid-cols-4 space-x-[23px] w-full">
+            <div className="grid grid-cols-4  w-full ">
                 {listed.map((collection: any, index) => (
                     <ListingCard
                         key={index}
