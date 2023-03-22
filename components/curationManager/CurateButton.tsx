@@ -29,6 +29,25 @@ export const CurateButton = ({mintAccess, press, quantity, dataForMint}: any) =>
 
     console.log("checking config in here too", config)
 
+    // state for loading txns
+    const svgLoader = () => {
+        return (
+            <div className="flex flex-row justify-center items-center w-full ">
+                <img
+                width="20px"
+                src="/SVG-Loaders-master/svg-loaders/tail-spin.svg"
+                />
+            </div>
+        )
+    }
+
+    const curateSpinner = isLoading || mintWaitLoading
+        ? svgLoader()
+        : "curate"     
+
+        // const curateSpinner = svgLoader()
+
+
     return (
         <>
         {!mintAccess ? (
@@ -42,12 +61,13 @@ export const CurateButton = ({mintAccess, press, quantity, dataForMint}: any) =>
                 </button>
             </div>            
         ) : (
-            <div className="relative flex flex-row flex-wrap w-full  text-[14px]">
+            <div className="w-fit h-fit flex flex-row items-center  text-[14px]">
                 <button
-                    className="border-black border-[1px] bg-black text-white"
+                    className="border-[1px] border-black text-white bg-black disabled:bg-black hover:bg-white hover:text-black rounded-[30px] w-[100px] py-2 "
                     onClick={()=>write()}
+                    disabled={isLoading || mintWaitLoading ? true : false}
                 >
-                    Curate
+                    {curateSpinner}
                 </button>                                                                                   
             </div>
         )}

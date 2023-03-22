@@ -4,9 +4,9 @@ import { EnsResolution } from '../utils/EnsResolution';
 
 export const ListingCard = ({index,  metadata, collection}: any) => {
 
-    console.log("index", index)
-    console.log("metadata", metadata)
-    console.log("collection", collection)
+    // console.log("index", index)
+    // console.log("metadata", metadata)
+    // console.log("collection", collection)
 
     return (
         <>
@@ -15,7 +15,7 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
             <div></div>            
         ) : (
             <div className="relative flex flex-row flex-wrap w-full  text-[14px]">
-                <div  className="overflow-hidden relative w-[348px] aspect-video mb-[14px]">
+                <div  className="overflow-hidden relative w-[340px] aspect-video mb-[12px]">
                     <Image
                         src={metadata?.media[0]?.thumbnail}
                         layout="fill"
@@ -26,11 +26,8 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
                     {metadata?.contract.name}
                 </div>      
                 <div className="flex flex-row flex-wrap w-full">
-                    by&nbsp;<EnsResolution address={metadata?.contract?.contractDeployer} />
-                </div>                                     
-                <div className="flex flex-row flex-wrap w-full">
-                    curator&nbsp;<EnsResolution address={collection.rawMetadata.properties.curator}/>
-                </div>                                                                                       
+                    <EnsResolution address={metadata?.contract?.contractDeployer} />
+                </div>                                                                                                                          
             </div>
         )}
         </>
