@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from 'react';
 import { Network, Alchemy } from 'alchemy-sdk';
 import { NextPage } from 'next'
-import { ListingCard } from "../components/ListingCard.tsx"
-import { Manager } from "../components/Manager.tsx"
+import { ListingCard } from "../components/ListingCard"
+import { Manager } from "../components/Manager"
 import { EnsResolution } from '../utils/EnsResolution';
 import { useAuth } from "hooks/useAuth";
 
@@ -27,7 +27,7 @@ const CurationPage: NextPage = () => {
     // Initializing Alchemy indexer configs
     const alchemy_setting_goerli = {
         apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY_GOERLI,
-        network: Network.ETH_GOERLI, // Replace with your network.
+        network: Network.ETH_GOERLI,
     };
     const alchemy_settings_mainnet = {
         apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY,
@@ -38,10 +38,6 @@ const CurationPage: NextPage = () => {
     const alchemyGoerli = new Alchemy(alchemy_setting_goerli);
     const alchemyMainnet = new Alchemy(alchemy_settings_mainnet);
 
-    //  Return token 1 metadata from the contracts stored in listing receipts
-    //      currently this works because we are only indexing zora erc721 editions
-    //      tokenId will need to be dynamic and grabbed from the curation receipt as well AND
-    //      we should be able to treat erc721s + erc1155s differently (erc721s will have hasTokenId = false)     
     const parseMetadata = async (metadata: any) => {
         let parsedNFTs = []
         for (let i = 0; i < metadata.nfts.length; i++) {
@@ -51,17 +47,12 @@ const CurationPage: NextPage = () => {
         setParsedMetadata(parsedNFTs)
     }
 
-    //  Get metadata fetches all of the curation receipt nfts for a given contract
-    //      sets that to state, and then runs the parseMetadata function with the same return
-    //      this is run on page load once the route changes post search query via useEffect
     const getMetadata = async () => {
         const curationInfo: any = await alchemyGoerli.nft.getNftsForContract(contract)
         setCurationMetadata(curationInfo);
         await parseMetadata(curationInfo) 
     }    
 
-    // run if contract isnt null, if not dont do anythiing
-    // trigger dependency == router to prevent this firing before contract value has arrived
     useEffect(() => {
         if(!!contract) {
             getMetadata();
@@ -71,9 +62,9 @@ const CurationPage: NextPage = () => {
     )    
 
     return (
-        <div className="pt-[140px] pl-[36px] flex flex-col space-y-4 flex-wrap h-screen w-full ">
-            <div className="h-fit flex flex-row flex-wrap justify-start  w-full mb-[20px]">
-                <div className="flex flex-row w-full  items-end space-x-2">
+        <div className="pt-[140px] pb-20 sm:pb-[0px] sm:pl-[59px] flex flex-col space-y-4 flex-wrap min-h-screen h-full w-full ">
+            <div className="h-fit flex flex-row flex-wrap justify-start w-full mb-[20px]">
+                <div className="flex flex-row w-full items-end space-x-2">
                     <div className="text-[35px] flex flex-row p-0 m-0 justify-start h-fit " >
                         <a 
                         className="hover:underline hover:decoration-2"
@@ -94,9 +85,8 @@ const CurationPage: NextPage = () => {
                 </div>                        
             </div>            
             
-            <Manager userAddress={address} pressAddress={contract}   />
-            {/* <Container /> */}
-            <div className="grid grid-cols-4  w-full ">
+            <Manager userAddress={address} pressAddress={contract} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 ">
                 {listed.map((collection: any, index) => (
                     <ListingCard
                         key={index}
@@ -110,4 +100,4 @@ const CurationPage: NextPage = () => {
     )
 }
 
-export default CurationPage;
+export default CurationPage;                    

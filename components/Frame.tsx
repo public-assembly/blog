@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Search from "./Search"
 import { useState } from "react"
 import { useRouter } from "next/router";
@@ -7,7 +9,7 @@ export default function Frame() {
 
     // state for determining what collection to search
     const [collection, setCollection] = useState({
-        collectionAddress: "", 
+        collectionAddress: router?.query?.id, 
     });
 
     // change route function, passed in as callback to the search component
