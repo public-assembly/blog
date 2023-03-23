@@ -4,8 +4,8 @@ export default function Search({routeChange, collectionOnChange, collectionValue
         <div
             className="grid grid-cols-1 grid-rows-auto md:grid-rows-auto text-[14px] justify-center  w-fit h-fit"
         >
-            <div className=" flex flex-row justify-center space-y-4 md:space-y-0 h-full ">
-                <div className=" flex flex-row  h-full w-[539px] ">
+            <div className=" flex flex-row items-end justify-center space-y-4 md:space-y-0 h-full ">
+                <div className=" flex flex-row h-full sm:min-w-[539px] ">
                     <input
                         type="text"
                         placeholder="contract address"
@@ -20,12 +20,12 @@ export default function Search({routeChange, collectionOnChange, collectionValue
                                 }
                             })
                         }}                
-                        className="rounded-l-[30px] placeholder:text-[#9A9A9A] p-t-3 pl-3 border-[1px] border-black w-full flex flex-row items-center text-[16px]"
+                        className="rounded-l-[30px] placeholder:text-[#9A9A9A] p-t-3 pl-3 border-[1px] border-black h-fit w-full flex flex-row items-center text-[16px]"
                     >
                     </input>
                 </div>
-                <div className="flex flex-row  h-full w-[64px] ">
-                    <button onClick={()=>routeChange()} className=" rounded-r-[30px] border-t-[1px] border-r-[1px] border-b-[1px] border-black hover:bg-gray-100 text-white w-[50px]  h-[52px] md:h-full">
+                <div className="flex flex-row h-full w-fit ">
+                    <button onClick={()=>routeChange()} className=" rounded-r-[30px] border-t-[1px] border-r-[1px] border-b-[1px] border-black hover:bg-gray-100 text-white w-[50px]  px-4 h-full">
                         🔍
                     </button>
                 </div>

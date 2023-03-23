@@ -8,12 +8,15 @@ export const ManageButton = ({userAccess, manageState, manageStateCB}: any) => {
 
     if (!userAccess || userAccess === "false") {
         return (
-            <div className="w-full h-fit flex flex-row items-center space-x-4 text-[14px]">
-                <button 
-                disabled={true}
-                className="border-[1px] border-[#AEAEAE] text-[#AEAEAE] rounded-[30px] w-[100px] py-2 ">
-                    manage           
-                </button>
+            <div className="w-full h-fit flex flex-row flex-wrap items-center space-x-0 sm:space-x-4 text-[14px]">
+                <div className="flex flex-row w-full sm:w-fit">
+                    <button                 
+                    disabled={true}
+                    className="border-[1px] border-[#AEAEAE] text-[#AEAEAE] rounded-[30px] w-[100px] py-2 ">
+                        manage           
+                    </button>
+                </div>
+
                 <div className="border-[#AEAEAE] text-[#AEAEAE] flex flex-row">
                     ✱ you dont have access to this curation contract ✱
                 </div>

@@ -9,7 +9,7 @@ function App({ Component, pageProps }: AppProps) {
     <AppWrapper>    
       <div>
         <Header />
-        <main className="px-2 md:px-6">
+        <main className="px-2">
           <Component {...pageProps} />
         </main>
       </div>
