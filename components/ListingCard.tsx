@@ -14,20 +14,23 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
             // TODO: maybe add a loading state instead here ?
             <div></div>            
         ) : (
-            <div className="relative flex flex-row flex-wrap w-full max-w-full text-[14px]">
-                <div className="overflow-hidden relative w-full sm:w-[340px] aspect-video mb-[12px]">
+            <div className="relative flex flex-row items-start flex-wrap w-full max-w-full text-[14px] ">
+                <div className="overflow-hidden relative w-full sm:w-[340px] sm:h-[191px] aspect-video mb-[12px]">
                     <Image
                         src={metadata?.media[0]?.thumbnail}
                         layout="fill"
                         objectFit="cover"
                     />
                 </div>
-                <div className="font-bold flex flex-row flex-wrap w-full break-words">
+                <div className=" font-bold flex flex-row items-start flex-wrap w-full break-words">
                     {metadata?.contract.name}
                 </div>      
                 <div className="flex flex-row flex-wrap w-full break-words">
                     <EnsResolution address={metadata?.contract?.contractDeployer} />
-                </div>                                                                                                                          
+                </div>            
+                <div className=" flex flex-row items-start flex-wrap w-full break-words overflow-hidden line-clamp-2 max-h-[2.8em]">
+                    {metadata?.description}
+                </div>                                                                                                                               
             </div>
         )}
         </>
