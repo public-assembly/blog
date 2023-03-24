@@ -51,6 +51,24 @@ main {
   padding-bottom: var(--header-height);
 }
 
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked { 
+  background-color: black;
+  border-color: black;
+}
+
+.input-group {
+  width: 300px;
+}
+
 /* Style Drops UI */
 /* .drops-ui__mint-button--button,
 .connect__button {
