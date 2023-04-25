@@ -122,7 +122,7 @@ const CurationPage: NextPage = () => {
         [router]
     )    
     return (
-        <div className="pt-[140px] pb-20 sm:pb-[0px] sm:pl-[59px] sm:pr-[59px] lg:pr-[193px] flex flex-col  flex-wrap min-h-screen h-full w-full ">
+        <div className="pt-[140px] pb-20 sm:pb-[0px] sm:pl-[30px] sm:pr-[59px] lg:pr-[193px] flex flex-col  flex-wrap min-h-screen h-full w-full ">
             {/* Side panel Stuff */}
             <div
                 className={`fixed top-0 right-0 h-full w-[558px] bg-white shadow-2xl transform ${
@@ -143,7 +143,7 @@ const CurationPage: NextPage = () => {
             </div>    
             <div className="h-fit flex flex-row flex-wrap justify-start w-full mb-[20px]">
                 <div className="flex flex-row w-full items-end space-x-2">
-                    <div className="text-[24px] font-bold flex flex-row p-0 m-0 justify-start h-fit " >
+                    <div className="text-[20px] font-bold flex flex-row p-0 m-0 justify-start h-fit " >
                         <a 
                         className="hover:underline hover:decoration-2"
                         href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.address}`}
@@ -151,11 +151,11 @@ const CurationPage: NextPage = () => {
                         {listed[0]?.contract?.name}
                         </a>
                     </div>
-                    <div className="text-[24px] text-[#8FA8BE]">
+                    <div className="text-[20px] text-[#8FA8BE]">
                         {"· " + listed.length + " items"}
                     </div>
                 </div>
-                <div className="text-[18px] text-[#AAAAAA] flex flex-row flex-wrap justify-start w-full" >
+                <div className="text-[16px] text-[#AAAAAA] flex flex-row flex-wrap justify-start w-full" >
                     <a 
                     className="hover:underline hover:decoration-2"
                     href={`https://goerli.etherscan.io/address/${listed[0]?.contract?.contractDeployer}`}
@@ -175,7 +175,10 @@ const CurationPage: NextPage = () => {
                         &nbsp;{updated}
                     </div>
                 </div>
-                <ManageButton userAccess={userMintAccess} manageState={sidePanelOpen} manageStateCB={toggleSidePanel} />     
+                {/* 
+                    hiding manage button for demo purposes
+                    <ManageButton userAccess={userMintAccess} manageState={sidePanelOpen} manageStateCB={toggleSidePanel} />     
+                */}
             </div>            
             <div className="grid grid-cols-1 grid-rows-2 gap-x-3 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">        
                 {listed.map((collection: any, index) => (

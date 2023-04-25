@@ -1,4 +1,13 @@
-export default function Search({routeChange, collectionOnChange, collectionValue, collectionName}: any) {
+import React, { MutableRefObject } from 'react';
+
+type Props = {
+  routeChange?: any,
+  collectionOnChange?: any,
+  collectionValue?: any,
+  collectionName?: any,
+} 
+
+const Search: React.FC<Props> = ({routeChange, collectionOnChange, collectionValue, collectionName}: any) => {
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -8,27 +17,39 @@ export default function Search({routeChange, collectionOnChange, collectionValue
       };
     
       return (
-        <div className="grid grid-cols-1 grid-rows-auto md:grid-rows-auto text-[14px] justify-center w-fit h-fit">
-          <div className="flex flex-row items-end justify-center space-y-4 md:space-y-0 h-full">
-            <div className="flex flex-row h-full sm:min-w-[539px]">
-              <input
-                type="text"
-                placeholder="contract address"
-                name={collectionName}
-                value={collectionValue}
-                onChange={(e) =>
-                  collectionOnChange((current: object) => {
-                    return {
-                      ...current,
-                      collectionAddress: e.target.value,
-                    };
-                  })
-                }
-                onKeyDown={handleKeyDown}
-                className="rounded-l-[30px] placeholder:text-[#9A9A9A] p-t-3 pl-3 border-l-[1px] border-t-[1px] border-b-[1px] border-black h-fit w-full flex flex-row items-center text-[16px]"
-              />
+        <div className=" grid grid-cols-1 grid-rows-auto md:grid-rows-auto text-[14px] justify-center w-fit h-fit">
+          <div className="flex flex-row items-end justify-center justify-self-center  h-full">
+            <div className="flex flex-row h-full sm:min-w-[509px]">
+              <div className="focus:outline-none outline-none relative rounded-[30px]  h-[40px] w-full flex flex-row items-center">
+                <input
+                  type="text"
+                  name={collectionName}
+                  value={collectionValue}
+                  onChange={(e) =>
+                    collectionOnChange((current: object) => {
+                      return {
+                        ...current,
+                        collectionAddress: e.target.value,
+                      };
+                    })
+                  }
+                  onKeyDown={handleKeyDown}
+                  className="outline-none focus:outline-none rounded-[30px] placeholder:text-[#9A9A9A] border-[#9f9f9f] p-t-3 pl-3 h-[40px] w-full flex flex-row items-center text-[16px]"
+                />
+                <img
+                  className='hover:bg-gray-100 absolute right-3'
+                  src={"./searchIcon.svg"}
+                />
+              </div>
             </div>
-            <div className="flex flex-row h-full w-fit ">
+          </div>
+        </div>
+      );
+    }
+    export default Search  
+
+
+            {/* <div className="flex flex-row h-full w-fit ">
               <button
                 onClick={() => routeChange()}
                 className="rounded-r-[30px] border-t-[1px] border-r-[1px] border-b-[1px] border-black text-white w-[50px]  px-4 h-full"
@@ -38,19 +59,4 @@ export default function Search({routeChange, collectionOnChange, collectionValue
                 src={"./searchIcon.svg"}
                 />                
               </button>
-            </div>
-          </div>
-          <div className="flex flex-row justify-center text-left py-4 h-fit ">
-            welcome to&nbsp;<i>index</i> ! enter the curation contract you want to look up
-          </div>
-          <div className="flex flex-row justify-center text-left  h-fit text-[12px]">
-            <i>
-              for testing purposes →&nbsp;
-              <a className="hover:underline" href="https://goerli.etherscan.io/address/0xe945f1a1671d6819bedbb9178aed41b11e8b83a8">
-                0xe945f1a1671d6819bedbb9178aed41b11e8b83a8
-              </a>
-            </i>
-          </div>
-        </div>
-      );
-    }
+            </div> */}    

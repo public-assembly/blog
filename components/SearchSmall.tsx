@@ -1,5 +1,4 @@
 export default function SearchSmall({routeChange, collectionOnChange, collectionValue}: any) {
-    console.log("search small input", collectionValue)
     
     return (
         <div className="flex justify-center w-full">

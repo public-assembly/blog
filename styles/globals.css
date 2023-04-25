@@ -7,6 +7,14 @@
   --pa-pink: #FF89DE;
 }
 
+input:focus {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
 html,
 body {
   padding: 0;

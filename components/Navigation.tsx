@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from "react"
 import SearchSmall from "./SearchSmall"
+import Search from './Search'
 
 const pages = [
   {
@@ -30,7 +31,7 @@ export function Navigation() {
 
   if (router.route == "/") {
     return (
-      <nav className="text-[45px] flex flex-row w-full  h-fit items-start pr-[70px] justify-between">
+      <nav className="text-[28px] flex flex-row w-full  h-fit items-start pr-[70px] justify-between">
         <div className=" flex flex-row h-fit">
           {pages.map((page) => (
             <Link passHref href={page.slug} key={page.slug}>
@@ -48,7 +49,7 @@ export function Navigation() {
     );    
   } else {
       return (
-        <nav className="text-[45px] flex flex-row w-full  h-fit items-start pr-[70px] justify-between">
+        <nav className="text-[28px] flex flex-row w-full  h-fit items-start pr-[70px] justify-between">
           <div className="flex flex-row h-fit">
             {pages.map((page) => (
               <Link passHref href={page.slug} key={page.slug}>
@@ -62,7 +63,10 @@ export function Navigation() {
               </Link>
             ))}
           </div>
-          <SearchSmall routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} />
+          {/* <SearchSmall routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} /> */}
+          <div className="flex flex-row justify-center w-full">          
+            <Search routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} />
+          </div>
         </nav>
       );
   }
