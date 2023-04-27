@@ -21,7 +21,7 @@ export default function Connect({ connectCopy, ...props }: {connectCopy?: string
               {(() => {
                 if (!mounted || !account || !chain) {
                   return (
-                    <button className="connect__button" onClick={openConnectModal}>
+                    <button className="connect__button text-[14px]" onClick={openConnectModal}>
                       {connectCopy ? connectCopy : 'connect'}
                     </button>
                   )

@@ -20,8 +20,11 @@ export default function Frame() {
     }
 
     return (
-        <section id="main-feed" className='grid grid-cols-1 h-screen w-full  gap-4 justify-center'>
-            <div className=" flex flex-row items-center justify-center ">
+        <section id="main-feed" className=' mb-[50px] flex flex-row w-full  items-start justify-center'>
+            <div className=" flex flex-row flex-wrap items-center justify-center">
+                <div className="flex flex-row w-full justify-center text-[40px] pb-[20px] font-normal" >
+                index
+                </div>
                 <Search routeChange={routeChange} collectionOnChange={setCollection} collectionValue={collection.collectionAddress} collectionName={"collection"} />
             </div>
         </section>

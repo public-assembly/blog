@@ -5,7 +5,7 @@ export default function Disconnect() {
   if (!isConnected) return null
   return (
     <div className="flex flex-wrap">
-      <div className="flex w-full justify-end gap-2 text-[16px]">
+      <div className="flex w-full justify-end gap-2 text-[14px]">
         {ensName}
       </div>
       <button
