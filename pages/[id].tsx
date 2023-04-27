@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { useRouter } from "next/router";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Network, Alchemy } from 'alchemy-sdk';
 import { NextPage } from 'next'
 import { ListingCard } from "../components/ListingCard"
@@ -54,30 +54,6 @@ const CurationPage: NextPage = () => {
     const updated = lastUpdated ? convertDate(lastUpdated) : "mm/yy/dd/ss"
     const parsed = parsedMetadata ? parsedMetadata : []
 
-    // const fetchContentType = async (url) => {
-    //     let updatedUrl;      
-    //     if (url.startsWith('ipfs://')) {
-    //       const ipfsGateway = 'https://ipfs.io/ipfs/';
-    //       updatedUrl = url.replace('ipfs://', ipfsGateway);
-    //     } else if (url.startsWith('arweave://')) {
-    //       const arweaveGateway = 'https://arweave.net/';
-    //       updatedUrl = url.replace('arweave://', arweaveGateway);
-    //     } else {
-    //       updatedUrl = url;
-    //     }      
-    //     try {
-    //       const response = await fetch(updatedUrl);      
-    //       if (response.ok) {
-    //         const contentType = response.headers.get('Content-Type');
-    //         return contentType || null;
-    //       }      
-    //       throw new Error(`Error fetching content type for URL: ${url}`);
-    //     } catch (error) {
-    //       console.error(`Failed to fetch content type for URL: ${url}`, error);
-    //       return null; // Or return a default value or custom error message
-    //     }
-    //   };
-
     // Initializing Alchemy indexer configs
     const alchemy_setting_goerli = {
         apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY_GOERLI,
@@ -93,20 +69,36 @@ const CurationPage: NextPage = () => {
     const alchemyMainnet = new Alchemy(alchemy_settings_mainnet);
 
     const parseMetadata = async (metadata: any) => {
-        let parsedNFTs = []
-        for (let i = 2; i < metadata.nfts.length; i++) {
-        if (metadata.nfts[i].rawMetadata.properties.curationTargetType == "1") {
-            // hardcode tokenId = 1 if the curation type is an nft contract
-            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, "1")   
-            parsedNFTs.push(nftData)
-        } else if (value.rawMetadata.properties.curationTargetType == "4") {
-            // dynamically get tokenId from proerties if the curation type is an nft item 
-            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, metadata.nfts[i].rawMetadata.properties.selectedTokenId) 
-            parsedNFTs.push(nftData)
+        let parsedNFTs = [];
+        for (let i = 0; i < metadata.nfts.length; i++) {
+            try {
+                let nftData;
+                if (metadata.nfts[i].rawMetadata.properties.curationTargetType == "1") {
+                    // hardcode tokenId = 1 if the curation type is an nft contract
+                    nftData = await alchemyMainnet.nft.getNftMetadata(
+                        metadata.nfts[i].rawMetadata.properties.contract,
+                        "1"
+                    );
+                } else if (metadata.nfts[i].rawMetadata.properties.curationTargetType == "4") {
+                    // dynamically get tokenId from properties if the curation type is an nft item
+                    nftData = await alchemyMainnet.nft.getNftMetadata(
+                        metadata.nfts[i].rawMetadata.properties.contract,
+                        metadata.nfts[i].rawMetadata.properties.selectedTokenId
+                    );
+                } else {
+                    // If neither condition is met, push an empty object
+                    nftData = [];
+                }
+                parsedNFTs.push(nftData);
+            } catch (error) {
+                console.error(`Error fetching NFT metadata for index ${i}:`, error);
+                // Push an empty object or a custom error object to the parsedNFTs array
+                parsedNFTs.push([]);
+            }
         }
-        setParsedMetadata(parsedNFTs)
-    }
-    }
+        setParsedMetadata(parsedNFTs);
+    };
+    
 
     const getMetadata = async () => {
         const curationInfo: any = await alchemyGoerli.nft.getNftsForContract(contract)
@@ -116,12 +108,11 @@ const CurationPage: NextPage = () => {
     }    
 
     useEffect(() => {
-        if(!!contract) {
+        if (!!contract && contract !== "0x0000000000000000000000000000000000000000") {
             getMetadata();
-        }    
-        },
-        []
-    )    
+        }
+    }, [contract, router.query]);    
+
     return (
         <div className="pt-[140px] pb-20 sm:pb-[0px] sm:pl-[30px] sm:pr-[59px] lg:pr-[193px] flex flex-col  flex-wrap min-h-screen h-full w-full ">
             {/* Side panel Stuff */}
@@ -154,9 +145,9 @@ const CurationPage: NextPage = () => {
                     </div>
                     <div className="text-[20px] text-[#8FA8BE]">
                         {
-                            listed.length - 24 <= 1 
-                            ? "· " + (listed.length - 24) + " item"
-                            : "· " + (listed.length - 24) + " items"
+                            listed.length <= 1 
+                            ? "· " + (listed.length) + " item"
+                            : "· " + (listed.length) + " items"
                         }
                     </div>
                 </div>
