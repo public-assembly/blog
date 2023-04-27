@@ -38,8 +38,6 @@ export const Manager2 = ({userAddress, pressAddress}: any) => {
     const curatorAddressington = curatorAddress
     const tokenIdington = inputData.selectedTokenId ? inputData.selectedTokenId : "0"
 
-    console.log("curated addres: ", curatedAddressington)
-
     // currently only allows for minting one at a time
 
         const dataForMint: any = utils.defaultAbiCoder.encode(        
