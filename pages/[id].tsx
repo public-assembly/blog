@@ -30,6 +30,9 @@ const CurationPage: NextPage = () => {
     const [parsedMetadata, setParsedMetadata] = useState();
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
 
+    console.log("curation metadata", curationMetadata)
+    console.log("parsed metadata", parsedMetadata)
+
     const toggleSidePanel = () => {
         setSidePanelOpen(!sidePanelOpen);
     };    
@@ -91,20 +94,18 @@ const CurationPage: NextPage = () => {
 
     const parseMetadata = async (metadata: any) => {
         let parsedNFTs = []
-        for (let i = 0; i < metadata.nfts.length; i++) {
-            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, "1")
-            // console.log("nftData: ", nftData)
-            // the code below fetches + assigns media types from all the files, but this can be very slow
-            // and messes with performance since its going thru IPFS
-            // need to find a workaround for adding media classification in a shorter way
-            // ??? maybe it can actually happen at the rendering level rather than needing to add classification?
-            // and the renderer can then set something to state depending on what type of file the media was or something like that
-            //
-            // const contentType = await fetchContentType(nftData.rawMetadata.animation_url);
-            // nftData.contentType = contentType;
+        for (let i = 2; i < metadata.nfts.length; i++) {
+        if (metadata.nfts[i].rawMetadata.properties.curationTargetType == "1") {
+            // hardcode tokenId = 1 if the curation type is an nft contract
+            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, "1")   
+            parsedNFTs.push(nftData)
+        } else if (value.rawMetadata.properties.curationTargetType == "4") {
+            // dynamically get tokenId from proerties if the curation type is an nft item 
+            let nftData = await alchemyMainnet.nft.getNftMetadata(metadata.nfts[i].rawMetadata.properties.contract, metadata.nfts[i].rawMetadata.properties.selectedTokenId) 
             parsedNFTs.push(nftData)
         }
         setParsedMetadata(parsedNFTs)
+    }
     }
 
     const getMetadata = async () => {
@@ -119,7 +120,7 @@ const CurationPage: NextPage = () => {
             getMetadata();
         }    
         },
-        [router]
+        []
     )    
     return (
         <div className="pt-[140px] pb-20 sm:pb-[0px] sm:pl-[30px] sm:pr-[59px] lg:pr-[193px] flex flex-col  flex-wrap min-h-screen h-full w-full ">
@@ -152,7 +153,11 @@ const CurationPage: NextPage = () => {
                         </a>
                     </div>
                     <div className="text-[20px] text-[#8FA8BE]">
-                        {"· " + listed.length + " items"}
+                        {
+                            listed.length - 24 <= 1 
+                            ? "· " + (listed.length - 24) + " item"
+                            : "· " + (listed.length - 24) + " items"
+                        }
                     </div>
                 </div>
                 <div className="text-[16px] text-[#AAAAAA] flex flex-row flex-wrap justify-start w-full" >
@@ -175,10 +180,7 @@ const CurationPage: NextPage = () => {
                         &nbsp;{updated}
                     </div>
                 </div>
-                {/* 
-                    hiding manage button for demo purposes
-                    <ManageButton userAccess={userMintAccess} manageState={sidePanelOpen} manageStateCB={toggleSidePanel} />     
-                */}
+                <ManageButton userAccess={userMintAccess} manageState={sidePanelOpen} manageStateCB={toggleSidePanel} />     
             </div>            
             <div className="grid grid-cols-1 grid-rows-2 gap-x-3 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">        
                 {listed.map((collection: any, index) => (

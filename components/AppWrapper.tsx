@@ -31,7 +31,7 @@ const { chains, provider } = configureChains(
 )
 
 const { connectors } = getDefaultWallets({
-  appName: 'blog',
+  appName: 'index',
   chains,
 })
 

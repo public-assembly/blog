@@ -41,7 +41,7 @@ export const Manager2 = ({userAddress, pressAddress}: any) => {
     // currently only allows for minting one at a time
 
         const dataForMint: any = utils.defaultAbiCoder.encode(        
-        ["(address, uint96, address, uint16, int32, bool, uint16)[]"],
+        ["(address, uint96, address, int32, uint16, uint16, bool)[]"],
         [
             // first brackets define that this is a tuple
             [
@@ -50,14 +50,14 @@ export const Manager2 = ({userAddress, pressAddress}: any) => {
                     curatedAddressington,
                     tokenIdington,
                     curatorAddressington,
-                    inputData.curatorTargetType,
                     inputData.sortOrder,
-                    inputData.hasTokenId, 
-                    inputData.chainId
+                    inputData.chainId,
+                    inputData.curatorTargetType,                                        
+                    inputData.hasTokenId
                 ]
             ]
         ]
-    )
+        )
 
     return (
         <div className="flex flex-row flex-wrap items-center w-full  "> 

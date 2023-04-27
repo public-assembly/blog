@@ -13,14 +13,14 @@ export const ListingCard = ({index,  metadata, collection}: any) => {
             <div className="relative flex flex-row items-start flex-wrap w-full max-w-full text-[14px] ">
                 <div className="overflow-hidden relative w-full sm:w-[340px] sm:h-[191px] aspect-video mb-[5px]">
                     <Image
-                        src={metadata?.media[0]?.thumbnail}
+                        src={metadata?.media[0]?.gateway}
                         layout="fill"
                         objectFit="cover"
                     />
                 </div>
                 <div className="flex flex-col gap-[4px] w-full">
                     <div className="font-bold break-words">
-                    {metadata?.contract.name}
+                    {metadata?.title}
                     </div>
                     <div className="break-words">
                     <EnsResolution address={metadata?.contract?.contractDeployer} />
